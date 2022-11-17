@@ -39,6 +39,8 @@ dependencies:
   flutter_hooks: ^0.18.5+1
   hooks_riverpod: ^2.1.0
   go_router: ^5.1.1
+  google_fonts: ^3.0.1
+  flutter_web3: ^2.1.9
 
 dev_dependencies:
   flutter_test:
