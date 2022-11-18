@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:starpass_sample/providers/ethereum.dart';
 
-class TopPage extends StatelessWidget {
+class TopPage extends ConsumerWidget {
   static const String routeName = '/';
 
   const TopPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ethereum = ref.watch(ethereumProvider);
+    final ethereumEvent = ref.watch(ethereumProvider.notifier);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,13 +27,14 @@ class TopPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          Align(
-            alignment: Alignment.center,
-            child: OutlinedButton(
-              onPressed: () {},
-              child: Text('Connect Wallet', style: GoogleFonts.oswald()),
-            ),
-          )
+          if (ethereum.accounts.isEmpty)
+            Align(
+              alignment: Alignment.center,
+              child: OutlinedButton(
+                onPressed: ethereumEvent.requestAccount,
+                child: Text('Connect Wallet', style: GoogleFonts.oswald()),
+              ),
+            )
         ],
       ),
     );
