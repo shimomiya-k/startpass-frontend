@@ -10,7 +10,6 @@ class TopPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ethereum = ref.watch(ethereumProvider);
     final ethereumNotifier = ref.watch(ethereumProvider.notifier);
 
     return Scaffold(

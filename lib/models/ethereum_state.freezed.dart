@@ -14,16 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-EthereumState _$EthereumStateFromJson(Map<String, dynamic> json) {
-  return _EthereumState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$EthereumState {
   List<String> get accounts => throw _privateConstructorUsedError;
   int? get chainId => throw _privateConstructorUsedError;
+  Contract? get contract => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EthereumStateCopyWith<EthereumState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -35,7 +31,7 @@ abstract class $EthereumStateCopyWith<$Res> {
           EthereumState value, $Res Function(EthereumState) then) =
       _$EthereumStateCopyWithImpl<$Res, EthereumState>;
   @useResult
-  $Res call({List<String> accounts, int? chainId});
+  $Res call({List<String> accounts, int? chainId, Contract? contract});
 }
 
 /// @nodoc
@@ -53,6 +49,7 @@ class _$EthereumStateCopyWithImpl<$Res, $Val extends EthereumState>
   $Res call({
     Object? accounts = null,
     Object? chainId = freezed,
+    Object? contract = freezed,
   }) {
     return _then(_value.copyWith(
       accounts: null == accounts
@@ -63,6 +60,10 @@ class _$EthereumStateCopyWithImpl<$Res, $Val extends EthereumState>
           ? _value.chainId
           : chainId // ignore: cast_nullable_to_non_nullable
               as int?,
+      contract: freezed == contract
+          ? _value.contract
+          : contract // ignore: cast_nullable_to_non_nullable
+              as Contract?,
     ) as $Val);
   }
 }
@@ -75,7 +76,7 @@ abstract class _$$_EthereumStateCopyWith<$Res>
       __$$_EthereumStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> accounts, int? chainId});
+  $Res call({List<String> accounts, int? chainId, Contract? contract});
 }
 
 /// @nodoc
@@ -91,6 +92,7 @@ class __$$_EthereumStateCopyWithImpl<$Res>
   $Res call({
     Object? accounts = null,
     Object? chainId = freezed,
+    Object? contract = freezed,
   }) {
     return _then(_$_EthereumState(
       accounts: null == accounts
@@ -101,19 +103,21 @@ class __$$_EthereumStateCopyWithImpl<$Res>
           ? _value.chainId
           : chainId // ignore: cast_nullable_to_non_nullable
               as int?,
+      contract: freezed == contract
+          ? _value.contract
+          : contract // ignore: cast_nullable_to_non_nullable
+              as Contract?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_EthereumState extends _EthereumState with DiagnosticableTreeMixin {
-  const _$_EthereumState({final List<String> accounts = const [], this.chainId})
+  const _$_EthereumState(
+      {final List<String> accounts = const [], this.chainId, this.contract})
       : _accounts = accounts,
         super._();
-
-  factory _$_EthereumState.fromJson(Map<String, dynamic> json) =>
-      _$$_EthereumStateFromJson(json);
 
   final List<String> _accounts;
   @override
@@ -125,10 +129,12 @@ class _$_EthereumState extends _EthereumState with DiagnosticableTreeMixin {
 
   @override
   final int? chainId;
+  @override
+  final Contract? contract;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EthereumState(accounts: $accounts, chainId: $chainId)';
+    return 'EthereumState(accounts: $accounts, chainId: $chainId, contract: $contract)';
   }
 
   @override
@@ -137,7 +143,8 @@ class _$_EthereumState extends _EthereumState with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'EthereumState'))
       ..add(DiagnosticsProperty('accounts', accounts))
-      ..add(DiagnosticsProperty('chainId', chainId));
+      ..add(DiagnosticsProperty('chainId', chainId))
+      ..add(DiagnosticsProperty('contract', contract));
   }
 
   @override
@@ -146,40 +153,35 @@ class _$_EthereumState extends _EthereumState with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _$_EthereumState &&
             const DeepCollectionEquality().equals(other._accounts, _accounts) &&
-            (identical(other.chainId, chainId) || other.chainId == chainId));
+            (identical(other.chainId, chainId) || other.chainId == chainId) &&
+            (identical(other.contract, contract) ||
+                other.contract == contract));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_accounts), chainId);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_accounts), chainId, contract);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_EthereumStateCopyWith<_$_EthereumState> get copyWith =>
       __$$_EthereumStateCopyWithImpl<_$_EthereumState>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_EthereumStateToJson(
-      this,
-    );
-  }
 }
 
 abstract class _EthereumState extends EthereumState {
   const factory _EthereumState(
-      {final List<String> accounts, final int? chainId}) = _$_EthereumState;
+      {final List<String> accounts,
+      final int? chainId,
+      final Contract? contract}) = _$_EthereumState;
   const _EthereumState._() : super._();
-
-  factory _EthereumState.fromJson(Map<String, dynamic> json) =
-      _$_EthereumState.fromJson;
 
   @override
   List<String> get accounts;
   @override
   int? get chainId;
+  @override
+  Contract? get contract;
   @override
   @JsonKey(ignore: true)
   _$$_EthereumStateCopyWith<_$_EthereumState> get copyWith =>
