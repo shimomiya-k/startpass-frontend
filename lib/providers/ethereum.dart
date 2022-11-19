@@ -6,25 +6,41 @@ final ethereumProvider =
     StateNotifierProvider<EthereumProvider, EthereumState>((ref) => EthereumProvider());
 
 class EthereumProvider extends StateNotifier<EthereumState> {
-  EthereumProvider() : super(const EthereumState()) {
-    getAccounts();
-    registerHandler();
-  }
+  // Goerli chain id
+  static const operatingChain = 5;
 
-  Future<void> getAccounts() async {
+  EthereumProvider() : super(const EthereumState());
+
+  // 接続しているChainが合っているかどうか
+  bool get isInOperatingChain => state.chainId == operatingChain;
+
+  // 接続済みかどうか
+  bool get isConnected => Ethereum.isSupported && state.accounts.isNotEmpty;
+
+  // 現在接続されているアカウントを取得しStateを更新する
+  Future<bool> getAccounts() async {
     if (ethereum == null) {
-      return;
+      return false;
+    }
+
+    if (state.accounts.isNotEmpty) {
+      return true;
     }
 
     try {
       final chainId = await ethereum!.getChainId();
       final accounts = await ethereum!.getAccounts();
+
       state = state.copyWith(accounts: accounts, chainId: chainId);
+      registerHandler();
+      return isConnected;
     } on Exception {
       print('User rejected the modal🥲');
+      return false;
     }
   }
 
+  // Walletと接続を行う
   Future<void> requestAccount() async {
     if (ethereum == null) {
       return;
@@ -34,11 +50,13 @@ class EthereumProvider extends StateNotifier<EthereumState> {
       final chainId = await ethereum!.getChainId();
       final accounts = await ethereum!.requestAccount();
       state = state.copyWith(accounts: accounts, chainId: chainId);
+      registerHandler();
     } on EthereumUserRejected {
       print('User rejected the modal🥲');
     }
   }
 
+  // リスナーイベントをハンドリングする
   registerHandler() {
     if (ethereum == null) {
       return;
@@ -49,12 +67,10 @@ class EthereumProvider extends StateNotifier<EthereumState> {
   }
 
   onChainChanged(int chainId) {
-    print('chainId');
-    print(chainId);
+    state = state.copyWith(chainId: chainId);
   }
 
   onAccountsChanged(List<String> accounts) {
-    print('accounts');
-    print(accounts);
+    state = state.copyWith(accounts: accounts);
   }
 }

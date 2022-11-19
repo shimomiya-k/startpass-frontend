@@ -11,7 +11,7 @@ class TopPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ethereum = ref.watch(ethereumProvider);
-    final ethereumEvent = ref.watch(ethereumProvider.notifier);
+    final ethereumNotifier = ref.watch(ethereumProvider.notifier);
 
     return Scaffold(
       body: Column(
@@ -27,11 +27,11 @@ class TopPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          if (ethereum.accounts.isEmpty)
+          if (!ethereumNotifier.isConnected)
             Align(
               alignment: Alignment.center,
               child: OutlinedButton(
-                onPressed: ethereumEvent.requestAccount,
+                onPressed: ethereumNotifier.requestAccount,
                 child: Text('Connect Wallet', style: GoogleFonts.oswald()),
               ),
             )
