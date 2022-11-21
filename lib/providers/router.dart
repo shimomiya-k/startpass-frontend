@@ -7,9 +7,11 @@ import 'package:starpass_sample/pages/timeline/index.dart';
 import 'package:starpass_sample/pages/top/index.dart';
 import 'package:starpass_sample/providers/ethereum.dart';
 import 'package:flutter_web3/ethereum.dart' as ether;
+import 'package:starpass_sample/providers/navigator.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
+    navigatorKey: ref.watch(navigatorKeyProvider),
     routes: [
       GoRoute(path: TopPage.routeName, builder: (context, state) => const TopPage()),
       GoRoute(path: TimelinePage.routeName, builder: (context, state) => const TimelinePage()),

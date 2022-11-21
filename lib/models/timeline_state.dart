@@ -12,6 +12,8 @@ class TimelineState with _$TimelineState {
 
   const factory TimelineState({
     @Default([]) List<Timeline> timelines,
+    @Default(1) int maxLength,
+    @Default(true) bool loading,
   }) = _TimelineState;
 
   factory TimelineState.fromJson(Map<String, dynamic> json) => _$TimelineStateFromJson(json);
