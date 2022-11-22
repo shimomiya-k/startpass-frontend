@@ -1,16 +1,31 @@
-# starpass_sample
+# STAR試験
 
-A new Flutter project.
+STAR試験のSocial network 3.0
+フロントエンドのプロジェクトです
 
-## Getting Started
+## 概要
 
-This project is a starting point for a Flutter application.
+本プロジェクトでは以下の機能を体験できます
 
-A few resources to get you started if this is your first Flutter project:
+- ユーザーが自分のウォレットをWEBアプリケーションに接続できる。
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![1](gif/1.gif)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+- ユーザーがWEBアプリケーションのグローバルタイムラインに投稿をアップロードできる
+    - 投稿は、投稿日時がUTCで表示される
+    - 投稿には、いいね！の数が表示される
+    - 投稿者のウォレットアドレスが表示される
+
+![2](gif/2.gif)
+
+- ユーザーはどの投稿にも「いいね！」をつけることができる
+    - 1ユーザーにつき1投稿に1「いいね！」まで
+    - 「いいね！」をもう一度することで「いいね！」を取り消すことができる
+
+![3](gif/3.gif)
+
+- グローバルタイムラインは、すべてのユーザーの投稿を見ることができる
+    - ユーザーは、アップロード時間と「いいね！」の数に基づいて、タイムラインをソートす
+
+![4](gif/4.gif)
