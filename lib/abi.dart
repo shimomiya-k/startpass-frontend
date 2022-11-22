@@ -56,6 +56,19 @@ const abi = '''[
     },
     {
       "inputs": [],
+      "name": "getAddressToFavorites",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getAllMessages",
       "outputs": [
         {

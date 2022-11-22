@@ -13,6 +13,7 @@ class Timeline with _$Timeline {
     required String id,
     required String address,
     required String message,
+    @Default(0) int favorites,
     required int postedAt,
   }) = _Timeline;
 

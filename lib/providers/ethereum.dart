@@ -10,7 +10,7 @@ class EthereumProvider extends StateNotifier<EthereumState> {
   // Polygon Testnet chain id
   static const operatingChain = 80001;
   // Read address
-  static const contractAddress = '0xc6299b2940EFD8Da82817F328EF948b120663f09';
+  static const contractAddress = '0x7e5B31D0920087d310EF0AB59503d0e8ad2C148d';
 
   EthereumProvider() : super(const EthereumState());
 

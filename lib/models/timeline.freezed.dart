@@ -23,6 +23,7 @@ mixin _$Timeline {
   String get id => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  int get favorites => throw _privateConstructorUsedError;
   int get postedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $TimelineCopyWith<$Res> {
   factory $TimelineCopyWith(Timeline value, $Res Function(Timeline) then) =
       _$TimelineCopyWithImpl<$Res, Timeline>;
   @useResult
-  $Res call({String id, String address, String message, int postedAt});
+  $Res call(
+      {String id, String address, String message, int favorites, int postedAt});
 }
 
 /// @nodoc
@@ -55,6 +57,7 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
     Object? id = null,
     Object? address = null,
     Object? message = null,
+    Object? favorites = null,
     Object? postedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +73,10 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      favorites: null == favorites
+          ? _value.favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as int,
       postedAt: null == postedAt
           ? _value.postedAt
           : postedAt // ignore: cast_nullable_to_non_nullable
@@ -85,7 +92,8 @@ abstract class _$$_TimelineCopyWith<$Res> implements $TimelineCopyWith<$Res> {
       __$$_TimelineCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String address, String message, int postedAt});
+  $Res call(
+      {String id, String address, String message, int favorites, int postedAt});
 }
 
 /// @nodoc
@@ -102,6 +110,7 @@ class __$$_TimelineCopyWithImpl<$Res>
     Object? id = null,
     Object? address = null,
     Object? message = null,
+    Object? favorites = null,
     Object? postedAt = null,
   }) {
     return _then(_$_Timeline(
@@ -117,6 +126,10 @@ class __$$_TimelineCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      favorites: null == favorites
+          ? _value.favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as int,
       postedAt: null == postedAt
           ? _value.postedAt
           : postedAt // ignore: cast_nullable_to_non_nullable
@@ -132,6 +145,7 @@ class _$_Timeline extends _Timeline with DiagnosticableTreeMixin {
       {required this.id,
       required this.address,
       required this.message,
+      this.favorites = 0,
       required this.postedAt})
       : super._();
 
@@ -145,11 +159,14 @@ class _$_Timeline extends _Timeline with DiagnosticableTreeMixin {
   @override
   final String message;
   @override
+  @JsonKey()
+  final int favorites;
+  @override
   final int postedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Timeline(id: $id, address: $address, message: $message, postedAt: $postedAt)';
+    return 'Timeline(id: $id, address: $address, message: $message, favorites: $favorites, postedAt: $postedAt)';
   }
 
   @override
@@ -160,6 +177,7 @@ class _$_Timeline extends _Timeline with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('favorites', favorites))
       ..add(DiagnosticsProperty('postedAt', postedAt));
   }
 
@@ -171,13 +189,16 @@ class _$_Timeline extends _Timeline with DiagnosticableTreeMixin {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.message, message) || other.message == message) &&
+            (identical(other.favorites, favorites) ||
+                other.favorites == favorites) &&
             (identical(other.postedAt, postedAt) ||
                 other.postedAt == postedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, address, message, postedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, address, message, favorites, postedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -198,6 +219,7 @@ abstract class _Timeline extends Timeline {
       {required final String id,
       required final String address,
       required final String message,
+      final int favorites,
       required final int postedAt}) = _$_Timeline;
   const _Timeline._() : super._();
 
@@ -209,6 +231,8 @@ abstract class _Timeline extends Timeline {
   String get address;
   @override
   String get message;
+  @override
+  int get favorites;
   @override
   int get postedAt;
   @override

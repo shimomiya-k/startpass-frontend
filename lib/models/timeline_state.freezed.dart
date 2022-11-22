@@ -21,8 +21,11 @@ TimelineState _$TimelineStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TimelineState {
   List<Timeline> get timelines => throw _privateConstructorUsedError;
+  List<String> get favorites => throw _privateConstructorUsedError;
   int get maxLength => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
+  dynamic get sortType => throw _privateConstructorUsedError;
+  String? get updatingFavoriteId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +39,13 @@ abstract class $TimelineStateCopyWith<$Res> {
           TimelineState value, $Res Function(TimelineState) then) =
       _$TimelineStateCopyWithImpl<$Res, TimelineState>;
   @useResult
-  $Res call({List<Timeline> timelines, int maxLength, bool loading});
+  $Res call(
+      {List<Timeline> timelines,
+      List<String> favorites,
+      int maxLength,
+      bool loading,
+      dynamic sortType,
+      String? updatingFavoriteId});
 }
 
 /// @nodoc
@@ -53,14 +62,21 @@ class _$TimelineStateCopyWithImpl<$Res, $Val extends TimelineState>
   @override
   $Res call({
     Object? timelines = null,
+    Object? favorites = null,
     Object? maxLength = null,
     Object? loading = null,
+    Object? sortType = null,
+    Object? updatingFavoriteId = freezed,
   }) {
     return _then(_value.copyWith(
       timelines: null == timelines
           ? _value.timelines
           : timelines // ignore: cast_nullable_to_non_nullable
               as List<Timeline>,
+      favorites: null == favorites
+          ? _value.favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       maxLength: null == maxLength
           ? _value.maxLength
           : maxLength // ignore: cast_nullable_to_non_nullable
@@ -69,6 +85,14 @@ class _$TimelineStateCopyWithImpl<$Res, $Val extends TimelineState>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      sortType: null == sortType
+          ? _value.sortType
+          : sortType // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      updatingFavoriteId: freezed == updatingFavoriteId
+          ? _value.updatingFavoriteId
+          : updatingFavoriteId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +105,13 @@ abstract class _$$_TimelineStateCopyWith<$Res>
       __$$_TimelineStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Timeline> timelines, int maxLength, bool loading});
+  $Res call(
+      {List<Timeline> timelines,
+      List<String> favorites,
+      int maxLength,
+      bool loading,
+      dynamic sortType,
+      String? updatingFavoriteId});
 }
 
 /// @nodoc
@@ -96,14 +126,21 @@ class __$$_TimelineStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? timelines = null,
+    Object? favorites = null,
     Object? maxLength = null,
     Object? loading = null,
+    Object? sortType = null,
+    Object? updatingFavoriteId = freezed,
   }) {
     return _then(_$_TimelineState(
       timelines: null == timelines
           ? _value._timelines
           : timelines // ignore: cast_nullable_to_non_nullable
               as List<Timeline>,
+      favorites: null == favorites
+          ? _value._favorites
+          : favorites // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       maxLength: null == maxLength
           ? _value.maxLength
           : maxLength // ignore: cast_nullable_to_non_nullable
@@ -112,6 +149,11 @@ class __$$_TimelineStateCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      sortType: null == sortType ? _value.sortType : sortType,
+      updatingFavoriteId: freezed == updatingFavoriteId
+          ? _value.updatingFavoriteId
+          : updatingFavoriteId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -121,9 +163,13 @@ class __$$_TimelineStateCopyWithImpl<$Res>
 class _$_TimelineState extends _TimelineState with DiagnosticableTreeMixin {
   const _$_TimelineState(
       {final List<Timeline> timelines = const [],
+      final List<String> favorites = const [],
       this.maxLength = 1,
-      this.loading = true})
+      this.loading = true,
+      this.sortType = SortType.postedAtAsc,
+      this.updatingFavoriteId})
       : _timelines = timelines,
+        _favorites = favorites,
         super._();
 
   factory _$_TimelineState.fromJson(Map<String, dynamic> json) =>
@@ -137,16 +183,29 @@ class _$_TimelineState extends _TimelineState with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(_timelines);
   }
 
+  final List<String> _favorites;
+  @override
+  @JsonKey()
+  List<String> get favorites {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_favorites);
+  }
+
   @override
   @JsonKey()
   final int maxLength;
   @override
   @JsonKey()
   final bool loading;
+  @override
+  @JsonKey()
+  final dynamic sortType;
+  @override
+  final String? updatingFavoriteId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimelineState(timelines: $timelines, maxLength: $maxLength, loading: $loading)';
+    return 'TimelineState(timelines: $timelines, favorites: $favorites, maxLength: $maxLength, loading: $loading, sortType: $sortType, updatingFavoriteId: $updatingFavoriteId)';
   }
 
   @override
@@ -155,8 +214,11 @@ class _$_TimelineState extends _TimelineState with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'TimelineState'))
       ..add(DiagnosticsProperty('timelines', timelines))
+      ..add(DiagnosticsProperty('favorites', favorites))
       ..add(DiagnosticsProperty('maxLength', maxLength))
-      ..add(DiagnosticsProperty('loading', loading));
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('sortType', sortType))
+      ..add(DiagnosticsProperty('updatingFavoriteId', updatingFavoriteId));
   }
 
   @override
@@ -166,15 +228,26 @@ class _$_TimelineState extends _TimelineState with DiagnosticableTreeMixin {
             other is _$_TimelineState &&
             const DeepCollectionEquality()
                 .equals(other._timelines, _timelines) &&
+            const DeepCollectionEquality()
+                .equals(other._favorites, _favorites) &&
             (identical(other.maxLength, maxLength) ||
                 other.maxLength == maxLength) &&
-            (identical(other.loading, loading) || other.loading == loading));
+            (identical(other.loading, loading) || other.loading == loading) &&
+            const DeepCollectionEquality().equals(other.sortType, sortType) &&
+            (identical(other.updatingFavoriteId, updatingFavoriteId) ||
+                other.updatingFavoriteId == updatingFavoriteId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_timelines), maxLength, loading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_timelines),
+      const DeepCollectionEquality().hash(_favorites),
+      maxLength,
+      loading,
+      const DeepCollectionEquality().hash(sortType),
+      updatingFavoriteId);
 
   @JsonKey(ignore: true)
   @override
@@ -193,8 +266,11 @@ class _$_TimelineState extends _TimelineState with DiagnosticableTreeMixin {
 abstract class _TimelineState extends TimelineState {
   const factory _TimelineState(
       {final List<Timeline> timelines,
+      final List<String> favorites,
       final int maxLength,
-      final bool loading}) = _$_TimelineState;
+      final bool loading,
+      final dynamic sortType,
+      final String? updatingFavoriteId}) = _$_TimelineState;
   const _TimelineState._() : super._();
 
   factory _TimelineState.fromJson(Map<String, dynamic> json) =
@@ -203,9 +279,15 @@ abstract class _TimelineState extends TimelineState {
   @override
   List<Timeline> get timelines;
   @override
+  List<String> get favorites;
+  @override
   int get maxLength;
   @override
   bool get loading;
+  @override
+  dynamic get sortType;
+  @override
+  String? get updatingFavoriteId;
   @override
   @JsonKey(ignore: true)
   _$$_TimelineStateCopyWith<_$_TimelineState> get copyWith =>

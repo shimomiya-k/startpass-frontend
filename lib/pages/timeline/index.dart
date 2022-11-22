@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:starpass_sample/components/card/post_card.dart';
+import 'package:starpass_sample/models/timeline_state.dart';
 import 'package:starpass_sample/pages/timeline/provider.dart';
 import 'package:starpass_sample/providers/ethereum.dart';
 
@@ -52,13 +53,13 @@ class TimelinePage extends ConsumerWidget {
         if (constraints.maxWidth > 750) {
           return _buildLarge;
         } else {
-          return const Center(child: Text('small'));
+          return const Center(child: Text('Not supported small window.'));
         }
       });
 
   get _buildLarge => HookConsumer(builder: (context, ref, _) {
         final state = ref.watch(timelineProvider);
-        final viewModel = ref.watch(timelineProvider.notifier);
+        final notifier = ref.watch(timelineProvider.notifier);
         final controller = useTextEditingController();
 
         return Row(
@@ -71,24 +72,51 @@ class TimelinePage extends ConsumerWidget {
                   child: state.timelines.isEmpty
                       ? Column(
                           children: [
+                            const SizedBox(height: 24.0),
                             const Text('Messages empty.'),
                             const SizedBox(height: 24.0),
-                            TextButton(onPressed: viewModel.init, child: const Text('Reload')),
+                            TextButton(onPressed: notifier.init, child: const Text('Reload')),
                           ],
                         )
-                      : ListView(
-                          padding: const EdgeInsets.all(24.0),
-                          children: List.generate(
-                            state.timelines.length,
-                            (index) => Container(
-                              margin: const EdgeInsets.only(bottom: 16.0),
-                              child: PostCard(
-                                message: state.timelines[index].message,
-                                address: state.timelines[index].address,
-                                postedAt: state.timelines[index].postedAt,
+                      : Column(
+                          children: [
+                            const SizedBox(height: 16.0),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: PopupMenuButton<SortType>(
+                                icon: const Icon(Icons.sort),
+                                initialValue: state.sortType,
+                                itemBuilder: (context) {
+                                  return List.generate(SortType.values.length, (index) {
+                                    final sortType = SortType.values[index];
+                                    return PopupMenuItem(
+                                      value: sortType,
+                                      child: Text(sortType.name.toUpperCase()),
+                                    );
+                                  });
+                                },
+                                tooltip: 'Sort',
+                                onSelected: notifier.updateSort,
                               ),
                             ),
-                          ),
+                            Expanded(
+                              child: ListView(
+                                padding: const EdgeInsets.all(24.0),
+                                children: List.generate(
+                                  state.timelines.length,
+                                  (index) => Container(
+                                    margin: const EdgeInsets.only(bottom: 16.0),
+                                    child: PostCard(
+                                      id: state.timelines[index].id,
+                                      message: state.timelines[index].message,
+                                      address: state.timelines[index].address,
+                                      postedAt: state.timelines[index].postedAt,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                 ),
               ),
@@ -116,7 +144,7 @@ class TimelinePage extends ConsumerWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                          onPressed: () => viewModel.postMessage(controller.text),
+                          onPressed: () => notifier.postMessage(controller.text),
                           child: const Text('Post')),
                     )
                   ],
