@@ -6,6 +6,7 @@ import 'package:starpass_sample/models/ethereum_state.dart';
 final ethereumProvider =
     StateNotifierProvider<EthereumProvider, EthereumState>((ref) => EthereumProvider());
 
+/// Ethereumの状態を管理するProvider
 class EthereumProvider extends StateNotifier<EthereumState> {
   // Polygon Testnet chain id
   static const operatingChain = 80001;
@@ -20,12 +21,14 @@ class EthereumProvider extends StateNotifier<EthereumState> {
   // 接続済みかどうか
   bool get isConnected => Ethereum.isSupported && state.accounts.isNotEmpty;
 
-  // 現在接続されているアカウントを取得しStateを更新する
+  /// 現在接続されているアカウントを取得しStateを更新する
   Future<bool> getAccounts() async {
+    // ethereumがnullの場合は何もしない
     if (ethereum == null) {
       return false;
     }
 
+    // 既にaccountsがstateに入っている場合は何もしない
     if (state.accounts.isNotEmpty) {
       return true;
     }
@@ -43,7 +46,7 @@ class EthereumProvider extends StateNotifier<EthereumState> {
     }
   }
 
-  // Walletと接続を行う
+  /// Walletと接続を行う
   Future<void> requestAccount() async {
     if (ethereum == null) {
       return;
@@ -60,7 +63,7 @@ class EthereumProvider extends StateNotifier<EthereumState> {
     }
   }
 
-  // Chainを誘導する
+  /// 必要なChainに誘導する
   Future<void> switchChain() async {
     if (ethereum == null) {
       return;
@@ -73,7 +76,7 @@ class EthereumProvider extends StateNotifier<EthereumState> {
     }
   }
 
-  // コントラクトオブジェクトの初期化
+  /// コントラクトオブジェクトの初期化
   Future<void> initContract() async {
     final web3provider = Web3Provider.fromEthereum(ethereum!);
     final signer = web3provider.getSigner();
@@ -81,7 +84,7 @@ class EthereumProvider extends StateNotifier<EthereumState> {
     state = state.copyWith(contract: contract);
   }
 
-  // リスナーイベントをハンドリングする
+  /// リスナーイベントをハンドリングする
   registerHandler() {
     if (ethereum == null) {
       return;
@@ -91,10 +94,13 @@ class EthereumProvider extends StateNotifier<EthereumState> {
     ethereum!.onAccountsChanged(onAccountsChanged);
   }
 
+  /// Chainが変更されたことを検知してStateを更新
   onChainChanged(int chainId) {
     state = state.copyWith(chainId: chainId);
   }
 
+  /// Accountが変更されたことを検知してStateを更新
+  /// 未使用
   onAccountsChanged(List<String> accounts) {
     state = state.copyWith(accounts: accounts);
   }

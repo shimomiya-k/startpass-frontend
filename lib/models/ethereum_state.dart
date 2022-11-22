@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'ethereum_state.freezed.dart';
 
+/// Ethereumの状態管理用
 @freezed
 class EthereumState with _$EthereumState {
   const EthereumState._();

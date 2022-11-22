@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'timeline.freezed.dart';
 part 'timeline.g.dart';
 
+/// Timelineモデル
 @freezed
 class Timeline with _$Timeline {
   const Timeline._();

@@ -7,6 +7,7 @@ final favoriteProvider = FutureProviderFamily<int, String>((ref, id) async {
   return await timeline.getFavoriteCount(id);
 });
 
+/// メッセージを表示するカード
 class PostCard extends ConsumerWidget {
   const PostCard({
     super.key,
@@ -16,9 +17,16 @@ class PostCard extends ConsumerWidget {
     required this.postedAt,
   });
 
+  /// メッセージのID
   final String id;
+
+  /// 投稿したテキスト
   final String message;
+
+  /// 投稿者
   final String address;
+
+  /// 投稿日
   final int postedAt;
 
   @override
@@ -39,6 +47,7 @@ class PostCard extends ConsumerWidget {
             const SizedBox(height: 8.0),
             Row(
               children: [
+                // 更新中じゃなければボタンを表示
                 if (state.updatingFavoriteId == null || state.updatingFavoriteId != id)
                   IconButton(
                     onPressed: () async {
@@ -52,6 +61,8 @@ class PostCard extends ConsumerWidget {
                       size: 16.0,
                     ),
                   ),
+
+                // 更新中のIdと同一であればスピナーを表示
                 if (state.updatingFavoriteId == id)
                   const SizedBox(
                     width: 20.0,
@@ -61,8 +72,12 @@ class PostCard extends ConsumerWidget {
                       child: CircularProgressIndicator(),
                     ),
                   ),
+
+                // Providerで現在のいいね数を取得して表示
                 if (!favorite.isLoading || favorite.hasValue) Text('${favorite.value ?? 0}'),
                 const Spacer(),
+
+                // 時刻表示
                 Text('$dateTime', style: Theme.of(context).textTheme.bodySmall),
               ],
             ),

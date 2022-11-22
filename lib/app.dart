@@ -9,7 +9,9 @@ class StarPassApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Routerを読み込む
     final router = ref.watch(routerProvider);
+    // Etherの状態を監視し、Routerでリダイレクトするか確認する
     ref.listen(ethereumProvider, (previous, next) {
       router.refresh();
     });
@@ -20,6 +22,7 @@ class StarPassApp extends ConsumerWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
         pageTransitionsTheme: PageTransitionsTheme(builders: {
+          // 画面遷移をアプリみたいにしない(スライドさせない)
           for (final platform in TargetPlatform.values) platform: const NoTransitionsBuilder(),
         }),
       ),

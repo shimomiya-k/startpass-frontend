@@ -19,6 +19,10 @@ class TimelineProvider extends StateNotifier<TimelineState> {
 
   final Ref _ref;
 
+  /// 初期化処理
+  /// 1. メッセージ全件取得
+  /// 2. 最大文字数取得
+  /// 3. 自分がいいねしてるId一覧を取得
   void init() async {
     try {
       state = state.copyWith(loading: true);
@@ -33,6 +37,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     }
   }
 
+  /// メッセージ全件取得
   Future<void> getAllMessages() async {
     final ethereum = _ref.read(ethereumProvider);
     final contract = ethereum.contract!;
@@ -51,6 +56,8 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     state = state.copyWith(timelines: timelines);
   }
 
+  /// 最大文字数の取得
+  /// これはデプロイしたオーナーしか変更不可(polygonscan等で確認)
   Future<void> getMaxLength() async {
     final ethereum = _ref.read(ethereumProvider);
     final contract = ethereum.contract!;
@@ -59,6 +66,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     state = state.copyWith(maxLength: maxLength.toInt());
   }
 
+  /// 自身がいいねしてるMessageのIdリストを取得
   Future<void> getFavorites() async {
     final ethereum = _ref.read(ethereumProvider);
     final contract = ethereum.contract!;
@@ -72,6 +80,8 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     state = state.copyWith(favorites: favorites.map((e) => e.toString()).toList());
   }
 
+  /// Messageに対してどのくらいいいねがあるのかを取得し、Timelineオブジェクトに反映
+  /// それぞれのMessageを表示しているコンポーネントが呼び出す
   Future<int> getFavoriteCount(String id) async {
     final ethereum = _ref.read(ethereumProvider);
     final contract = ethereum.contract!;
@@ -92,7 +102,9 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     return count;
   }
 
+  /// 投稿
   Future<void> postMessage(String? text) async {
+    // 空文字はエラー
     if (text == null || text.isEmpty) {
       final context = _ref.read(navigatorKeyProvider).currentContext!;
       const snackBar = SnackBar(content: Text('Message is empty!!'));
@@ -100,6 +112,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
       return;
     }
 
+    // 読み込み中とかはエラー
     if (state.loading) {
       final context = _ref.read(navigatorKeyProvider).currentContext!;
       const snackBar = SnackBar(content: Text('Already Loading!! Please Wait!!'));
@@ -126,9 +139,11 @@ class TimelineProvider extends StateNotifier<TimelineState> {
       return;
     }
 
+    // 投稿できたらデータ取得し直す
     init();
   }
 
+  /// いいねの更新
   Future<void> updateFavorite(String id) async {
     final ethereum = _ref.read(ethereumProvider);
     final contract = ethereum.contract!;
@@ -163,6 +178,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     }
   }
 
+  /// ソートの更新をハンドル
   void updateSort(SortType sortType) {
     state = state.copyWith(sortType: sortType);
     final timelines = List<Timeline>.from(state.timelines);
@@ -170,6 +186,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     state = state.copyWith(timelines: timelines);
   }
 
+  /// Timelineをソート
   void sort(List<Timeline> timelines) {
     switch (state.sortType) {
       case SortType.postedAtAsc:
@@ -187,6 +204,7 @@ class TimelineProvider extends StateNotifier<TimelineState> {
     }
   }
 
+  /// 対象のIdをいいねしているか
   bool isFavorite(String id) {
     return state.favorites.contains(id);
   }

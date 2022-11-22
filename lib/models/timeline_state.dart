@@ -13,6 +13,7 @@ enum SortType {
   favoriteDesc,
 }
 
+/// Timeline画面での状態
 @freezed
 class TimelineState with _$TimelineState {
   const TimelineState._();

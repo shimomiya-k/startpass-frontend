@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:starpass_sample/providers/ethereum.dart';
 
+/// 未ログイン時に表示するTOP画面
 class TopPage extends ConsumerWidget {
   static const String routeName = '/';
 
@@ -26,6 +27,8 @@ class TopPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16.0),
+
+          // 接続されていなければ、Connectできるボタンを表示する
           if (!ethereumNotifier.isConnected)
             Align(
               alignment: Alignment.center,
